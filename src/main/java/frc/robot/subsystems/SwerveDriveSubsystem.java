@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -301,11 +302,20 @@ public class SwerveDriveSubsystem extends SubsystemBase implements Updatable {
         ChassisSpeeds chassisVelocity;
 
         if (driveSignal.isFieldOriented()) {
-            chassisVelocity = ChassisSpeeds.fromFieldRelativeSpeeds(
+            ChassisSpeeds tempChassisVelocity = ChassisSpeeds.fromFieldRelativeSpeeds(
                     driveSignal.vxMetersPerSecond,
                     driveSignal.vyMetersPerSecond,
                     driveSignal.omegaRadiansPerSecond,
-                    getRotation());
+                    getGyroRotation());
+
+            Twist2d chassisTwist = new Pose2d()
+                    .log(new Pose2d(
+                            tempChassisVelocity.vxMetersPerSecond * 0.01,
+                            tempChassisVelocity.vyMetersPerSecond * 0.01,
+                            new Rotation2d(tempChassisVelocity.omegaRadiansPerSecond * 0.01)));
+
+            chassisVelocity =
+                    new ChassisSpeeds(chassisTwist.dx / 0.01, chassisTwist.dy / 0.01, chassisTwist.dtheta / 0.01);
         } else {
             chassisVelocity = (ChassisSpeeds) driveSignal;
         }
