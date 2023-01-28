@@ -30,6 +30,7 @@ public class LoggingThread extends Thread {
         }
     }
 
+    
     public interface Writer {
         public void sendUpdates(LogTable logTable);
     }
