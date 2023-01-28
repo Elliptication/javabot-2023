@@ -32,6 +32,7 @@ public class RobotContainer {
     private final VisionSubsystem visionSubsystem =
             new VisionSubsystem(swerveDriveSubsystem::addVisionPoseEstimate, swerveDriveSubsystem::getPose);
     private final ArmSubsystem armSubsystem = new ArmSubsystem();
+    private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
     private AutonomousManager autonomousManager;
     private UpdateManager updateManager;
@@ -66,13 +67,20 @@ public class RobotContainer {
         leftDriveController
                 .getLeftTopRight()
                 .onTrue(runOnce(() -> swerveDriveSubsystem.setPose(new Pose2d()), swerveDriveSubsystem));
-        leftDriveController
-                .getBottomThumb()
-                .whileTrue(swerveDriveSubsystem.preciseDriveCommand(
-                        getDriveForwardAxis(), getDriveStrafeAxis(), getDriveRotationAxis(), true));
+        // leftDriveController
+        //         .getBottomThumb()
+        //         .whileTrue(swerveDriveSubsystem.preciseDriveCommand(
+        //                 getDriveForwardAxis(), getDriveStrafeAxis(), getDriveRotationAxis(), true));
         leftDriveController.nameLeftTopLeft("Reset Gyro Angle");
         leftDriveController.nameLeftTopRight("Reset Pose");
-        leftDriveController.nameBottomThumb("Precise Driving");
+
+        leftDriveController.getBottomThumb().whileTrue(intakeSubsystem.runIntakeCommand());
+        leftDriveController.nameBottomThumb("Run Intake");
+        leftDriveController.getLeftThumb().whileTrue(intakeSubsystem.reverseIntakeCommand());
+        leftDriveController.getRightThumb().whileTrue(intakeSubsystem.shootCommand());
+        leftDriveController.nameLeftThumb("Reverse Intake");
+        leftDriveController.nameRightThumb("Shoot Cube");
+        // leftDriveController.nameBottomThumb("Precise Driving");
 
         // Leveling
         leftDriveController.getLeftBottomLeft().toggleOnTrue(swerveDriveSubsystem.levelChargeStationCommand());
