@@ -303,6 +303,12 @@ public class SwerveDriveSubsystem extends SubsystemBase implements Updatable {
 
             chassisVelocity =
                     new ChassisSpeeds(chassisTwist.dx / 0.01, chassisTwist.dy / 0.01, chassisTwist.dtheta / 0.01);
+            
+            chassisVelocity = ChassisSpeeds.fromFieldRelativeSpeeds(
+                driveSignal.vxMetersPerSecond,
+                driveSignal.vyMetersPerSecond,
+                driveSignal.omegaRadiansPerSecond,
+                 getGyroRotation());
         } else {
             chassisVelocity = (ChassisSpeeds) driveSignal;
         }
