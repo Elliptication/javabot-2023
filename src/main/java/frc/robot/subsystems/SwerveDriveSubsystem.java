@@ -311,10 +311,15 @@ public class SwerveDriveSubsystem extends SubsystemBase implements Updatable {
                 Constants.SwerveConstants.swerveKinematics.toSwerveModuleStates(chassisVelocity);
 
         if (driveSignal.isLocked()) {
-            var lockedVelocity = new ChassisSpeeds(0, 0, 1);
+            //var lockedVelocity = new ChassisSpeeds(0, 0, 1);
 
             // Get 45's for stopping
-            moduleStates = Constants.SwerveConstants.swerveKinematics.toSwerveModuleStates(lockedVelocity);
+            moduleStates = new SwerveModuleState[] {
+                new SwerveModuleState(0, Rotation2d.fromDegrees(45)),
+                new SwerveModuleState(0, Rotation2d.fromDegrees(-45)),
+                new SwerveModuleState(0, Rotation2d.fromDegrees(-45)),
+                new SwerveModuleState(0, Rotation2d.fromDegrees(45)),
+            } ;
 
             // Set the angle of each module only
             for (int i = 0; i < moduleStates.length; i++) {
