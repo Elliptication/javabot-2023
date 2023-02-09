@@ -41,10 +41,10 @@ public class IntakeSubsystem extends SubsystemBase{
         intakeMotor.setInverted(true);
 
         SupplyCurrentLimitConfiguration supplyLimit = new SupplyCurrentLimitConfiguration(
-                true,
-                20,
-                30,
-                0.1);
+                 true,
+                2,
+                .5,
+                .25);
 
         intakeMotor.configSupplyCurrentLimit(supplyLimit);
 
