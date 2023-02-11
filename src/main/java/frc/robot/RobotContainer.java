@@ -32,6 +32,8 @@ public class RobotContainer {
             new ThrustmasterJoystick(ControllerConstants.RIGHT_DRIVE_CONTROLLER);
     private final LogitechController operatorController =
             new LogitechController(ControllerConstants.OPERATOR_CONTROLLER);
+    
+    private final PrototypeGripperSubsystem prototypeGripperSubsystem = new PrototypeGripperSubsystem();        
 
     private final SwerveDriveSubsystem swerveDriveSubsystem = new SwerveDriveSubsystem();
     // private final LightsSubsystem lightsSubsystem = new LightsSubsystem();
@@ -59,7 +61,7 @@ public class RobotContainer {
         leftDriveController.getXAxis().setInverted(true);
         leftDriveController.getYAxis().setInverted(true);
         rightDriveController.getXAxis().setInverted(true);
-
+        
         /* Set default commands */
         // lightsSubsystem.setDefaultCommand(lightsSubsystem.defaultCommand());
         swerveDriveSubsystem.setDefaultCommand(swerveDriveSubsystem.driveCommand(
@@ -101,6 +103,11 @@ public class RobotContainer {
 
             Logger.log("/SwerveDriveSubsystem/TargetPose", targetPose);
             return targetPose;
+
+            leftDriveController.getRightBottomLeft().onTrue(prototypeGripperSubsystem.ejectFromGripperCommand());
+            leftDriveController.getLeftBottomLeft().onTrue(prototypeGripperSubsystem.dropObjectFromGripperCommand());
+            rightDriveController.getLeftBottomRight().onTrue(prototypeGripperSystem.grabConeWithGripperCommand());
+            rightDriveController.getRightBottomLeft().onTrue(prototypeGripperSystem.grabCubeWithGripperCommand());
         };
 
         Supplier<Pose2d> targetAimPoseSupplier = () -> {
