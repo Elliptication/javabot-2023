@@ -120,6 +120,7 @@ public class LightsSubsystem extends SubsystemBase {
         public int red;
         public int green;
         public int blue;
+        public int ratio;
 
         public Color(int red, int green, int blue) {
             this.red = red;

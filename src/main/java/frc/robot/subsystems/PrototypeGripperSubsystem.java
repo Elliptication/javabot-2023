@@ -44,26 +44,23 @@ public class PrototypeGripperSubsystem extends SubsystemBase {
     public void periodic()
     {
        switch (currentState){
-            case PossibleStates.OFF:
+            case OFF:
                 stopGripper();
                 break;
-            case PossibleStates.DROP:
+            case DROP:
                 dropObject();
                 break;
-            case PossibleStates.CONE_GRAB:
+            case CONE_GRAB:
                 grabCone();
                 break;
-            case PossibleStates.CUBE_GRAB:
+            case CUBE_GRAB:
                 grabCube();
                 break;
-            case PossibleStates.EJECT:
+            case EJECT:
                 ejectFromGripper();
-                break;
-            case default:
-                stopGripper();
-                break;    
+                break;   
             }  
-            Logger.log("/Gripper/Current", gripperMotor.getSupplyCurrent());     
+            Logger.log("/Gripper/Current", armWheels.getSupplyCurrent());     
     }
 
     public Command stopGripperCommand()
@@ -133,7 +130,6 @@ public class PrototypeGripperSubsystem extends SubsystemBase {
     {
         //Instantly kills the program.
         //funny method
-        System.exit();
     }
 
 }
