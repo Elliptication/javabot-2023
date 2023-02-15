@@ -55,6 +55,12 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
+
+        leftDriveController.getRightBottomLeft().onTrue(prototypeGripperSubsystem.ejectFromGripperCommand());
+        leftDriveController.getLeftBottomLeft().onTrue(prototypeGripperSubsystem.dropObjectFromGripperCommand());
+        rightDriveController.getLeftBottomRight().onTrue(prototypeGripperSubsystem.grabConeWithGripperCommand());
+        rightDriveController.getRightBottomLeft().onTrue(prototypeGripperSubsystem.grabCubeWithGripperCommand());
+
         leftDriveController.getXAxis().setScale(Constants.SwerveConstants.maxSpeed);
         leftDriveController.getYAxis().setScale(Constants.SwerveConstants.maxSpeed);
         rightDriveController.getXAxis().setScale(Constants.SwerveConstants.maxAngularVelocity);
@@ -104,10 +110,7 @@ public class RobotContainer {
             Logger.log("/SwerveDriveSubsystem/TargetPose", targetPose);
             return targetPose;
 
-            leftDriveController.getRightBottomLeft().onTrue(prototypeGripperSubsystem.ejectFromGripperCommand());
-            leftDriveController.getLeftBottomLeft().onTrue(prototypeGripperSubsystem.dropObjectFromGripperCommand());
-            rightDriveController.getLeftBottomRight().onTrue(prototypeGripperSystem.grabConeWithGripperCommand());
-            rightDriveController.getRightBottomLeft().onTrue(prototypeGripperSystem.grabCubeWithGripperCommand());
+            
         };
 
         Supplier<Pose2d> targetAimPoseSupplier = () -> {

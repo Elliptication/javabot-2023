@@ -23,8 +23,8 @@ public class PrototypeGripperSubsystem extends SubsystemBase {
     private LoggedReceiver gripperIntakeSpeed = Logger.receive("/Gripper/Intake Speed", 0.2);
     private LoggedReceiver gripperEjectSpeed = Logger.receive("/Gripper/Intake Speed", -0.2);
 
-    public ProtoypeGripperSubsystem() {
-        setDefaultCommand(stopGripperCommand);
+    public PrototypeGripperSubsystem() {
+        setDefaultCommand(stopGripperCommand());
 
         armWheels.setNeutralMode(NeutralMode.Brake);
         armWheels.configVoltageCompSaturation(GlobalConstants.targetVoltage);
